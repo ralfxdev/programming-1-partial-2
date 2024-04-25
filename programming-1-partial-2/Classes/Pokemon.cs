@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace programming_1_partial_2.Classes
 {
+    internal delegate void AttackHandler(Pokemon attacker, Pokemon target, int damage);
+
+    internal interface ICurable
+    {
+        void Heal();
+    }
+
     internal class Pokemon
     {
         public string Name { get; set; }
@@ -16,6 +23,9 @@ namespace programming_1_partial_2.Classes
         public int Speed { get; set; }
         public int Experience { get; set; }
         public int RequiredExperience { get; set; }
+
+        public event EventHandler ExperienceChanged;
+        public event AttackHandler Attacked;
 
         public Pokemon(string name, int level, int health, int attack, int defense, int speed, int experience, int requiredExperience)
         {
@@ -46,6 +56,12 @@ namespace programming_1_partial_2.Classes
             {
                 LevelUp();
             }
+            OnExperienceChanged();
+        }
+
+        protected virtual void OnExperienceChanged()
+        {
+            ExperienceChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void Heal()
@@ -66,6 +82,68 @@ namespace programming_1_partial_2.Classes
                 damage = 0;
             }
             enemy.Health -= damage;
+            OnAttacked(this, enemy, damage);
+        }
+
+        protected virtual void OnAttacked(Pokemon attacker, Pokemon target, int damage)
+        {
+            Attacked?.Invoke(attacker, target, damage);
+        }
+
+        // Indexador para acceder a los atributos del Pokémon por su nombre
+        public int this[string attributeName]
+        {
+            get
+            {
+                switch (attributeName.ToLower())
+                {
+                    case "level":
+                        return Level;
+                    case "health":
+                        return Health;
+                    case "attack":
+                        return Attack;
+                    case "defense":
+                        return Defense;
+                    case "speed":
+                        return Speed;
+                    case "experience":
+                        return Experience;
+                    case "requiredexperience":
+                        return RequiredExperience;
+                    default:
+                        throw new ArgumentException("Invalid attribute name");
+                }
+            }
+            set
+            {
+                switch (attributeName.ToLower())
+                {
+                    case "level":
+                        Level = value;
+                        break;
+                    case "health":
+                        Health = value;
+                        break;
+                    case "attack":
+                        Attack = value;
+                        break;
+                    case "defense":
+                        Defense = value;
+                        break;
+                    case "speed":
+                        Speed = value;
+                        break;
+                    case "experience":
+                        Experience = value;
+                        break;
+                    case "requiredexperience":
+                        RequiredExperience = value;
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid attribute name");
+                }
+            }
         }
     }
 }
