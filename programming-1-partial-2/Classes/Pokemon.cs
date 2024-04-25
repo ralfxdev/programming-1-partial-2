@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using programming_1_partial_2.Interfaces;
 
 namespace programming_1_partial_2.Classes
 {
     internal delegate void AttackHandler(Pokemon attacker, Pokemon target, int damage);
 
-    internal interface ICurable
-    {
-        void Heal();
-    }
-
-    internal class Pokemon
+    internal class Pokemon : IPokemon
     {
         public string Name { get; set; }
         public int Level { get; set; }
