@@ -2,7 +2,8 @@
 using programming_1_partial_2.Classes.ChildClasses;
 
 Pikachu pikachu = new Pikachu("Pikachu", 5, 50, 25, 15, 25, 0, 100);
-Charmander charmander = new Charmander("Charmander", 5, 60, 25, 20, 20, 0, 100);
+//Charmander charmander = new Charmander("Charmander", 5, 60, 25, 20, 20, 0, 100);
+Pokemon charmander = new Pokemon("Charmander", 5, 60, 25, 20, 20, 0, 100);
 
 Console.WriteLine("Estado inicial de los Pokémon:");
 Console.WriteLine($"Pikachu:\n{pikachu.ShowInfo()}\n");
